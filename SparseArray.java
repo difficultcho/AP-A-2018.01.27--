@@ -31,14 +31,16 @@ public class SparseArray {
     }
 
     public void removeColumn(int col) {
-        for (SparseArrayEntry sae : entries) {
-            int c = sae.getCol();
-            if (c < col) {
-                ;
-            } else if (c == col) {
-                entries.remove(sae);
+        int i = 0;
+        while (i < entries.size()) {
+            SparseArrayEntry e = entries.get(i);
+            if (e.getCol() == col) {
+                entries.remove(i);
+            } else if (e.getCol() > col) {
+                entries.set(i, new SparseArrayEntry(e.getRow(), e.getCol() - 1, e.getValue()));
+                i++;
             } else {
-                sae.reduceCol();
+                i++;
             }
         }
     }
